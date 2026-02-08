@@ -693,7 +693,8 @@
         <p class="contact-description">Have questions or want to place an order? We'd love to hear from you!</p>
       </div>
       
-      <form class="contact-form" method="POST" action="/">
+      <form class="contact-form" id="contactForm">
+
         <div class="form-group">
           <label for="name" class="form-label">Name</label>
           <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
@@ -733,6 +734,37 @@
       </div>
     </div>
   </footer>
+<script>
+  const form = document.getElementById("contactForm");
+  const successMessage = document.getElementById("successMessage");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const data = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value
+    };
+
+    fetch("https://script.google.com/macros/s/AKfycbwb78waTjTxnrFLpZ-qMndMT-OY-aJ9QXyrbikypeLSE5aAyipGsnHIzqF9wjb9jbhS/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      successMessage.classList.add("show");
+      form.reset();
+    })
+    .catch(error => {
+      alert("Error submitting form");
+      console.error(error);
+    });
+  });
+</script>
 
 </body>
 </html>
