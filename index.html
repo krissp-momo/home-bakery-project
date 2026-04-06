@@ -748,21 +748,13 @@
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const data = {
-      name: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      message: document.getElementById("message").value
-    };
+    const data = new FormData(form);
 
     fetch("https://script.google.com/macros/s/AKfycbwb78waTjTxnrFLpZ-qMndMT-OY-aJ9QXyrbikypeLSE5aAyipGsnHIzqF9wjb9jbhS/exec", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      body: data
     })
-    .then(response => response.json())
-    .then(result => {
+    .then(response => {
       successMessage.classList.add("show");
       form.reset();
     })
